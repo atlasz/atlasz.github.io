@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/game-ai-produce/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/game-ai-introduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="AtlasZ">
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/24/game-ai-produce/" itemprop="url">game_ai_produce</a></h1>
+                <a class="post-title-link" href="/2017/10/24/game-ai-introduction/" itemprop="url">game_ai_introduction</a></h1>
         
 
         <div class="post-meta">
@@ -351,7 +351,7 @@
 <h2 id="游戏开发中的人工智能"><a href="#游戏开发中的人工智能" class="headerlink" title="游戏开发中的人工智能"></a>游戏开发中的人工智能</h2><p>每一个游戏开发者在开发进行到某个阶段时，一定绕不开如何设计AI。</p>
 <p>在人工智能中，智能体(intelligent agent,简称IA)是一种实体，它自主观察感知外部环境，自行决策并选择最佳行为，以此完成自己的目标。设计游戏AI，目的就是设计能让玩家愉悦的IA，提升Gameplay的体验。</p>
 <p><strong>为了语义清晰且不造成歧义，IA在下文中用Agent表示</strong></p>
-<h2 id="从AI-Robotics开始"><a href="#从AI-Robotics开始" class="headerlink" title="从AI Robotics开始"></a>从AI Robotics开始</h2><img src="/2017/10/24/game-ai-produce/DetroitIndustry.jpg" alt="robotics" title="robotics">
+<h2 id="从AI-Robotics开始"><a href="#从AI-Robotics开始" class="headerlink" title="从AI Robotics开始"></a>从AI Robotics开始</h2><img src="/2017/10/24/game-ai-introduction/DetroitIndustry.jpg" alt="robotics" title="robotics">
 <p>学习新知识，如果害怕自己获取的信息过于片面，可以先从找一本该学科对应的导论入门开始。不幸的是我并未找到一本类似游戏AI导论的书籍，而人工智能导论概述的内容又超出游戏AI本身太多。因此，AI机器人学这个范畴刚好。无论是三种机器人范式(Robot paradigm)还是支撑范式的几个基元(Robot paradigm primitives),都可以直接映射到游戏AI中。</p>
 <h2 id="独孤九剑与机器人范式"><a href="#独孤九剑与机器人范式" class="headerlink" title="独孤九剑与机器人范式"></a>独孤九剑与机器人范式</h2><p>风清扬传授令狐冲的独孤九剑，虽有破剑、破刀、破掌、破气诸式，但以总决式纲领整套剑法，衍生三百六十种变化。姑且以机器人范式与之对应，总览游戏AI中涉及的各种技术，以期“一招鲜，吃遍天”。</p>
 <h3 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h3><p>范式是一种哲理或者界定一类问题的一组假设或技术，它是一种看待世界的方式，也包含了一系列解决问题的工具，它具有以下特点:</p>
@@ -362,7 +362,7 @@
 </ul>
 <p>用来描述机器人范式的原子结构，我们称之为基元(为了释义准确，我不得不接受了基元这个拗口的称呼)。机器人学中有三大被普遍认可的基元,即一个机器人的主要功能可以分为三类: <strong>感知(SENSE)、规划(PLAN)和执行(ACT)</strong>。(还有一种流派认为有第四种基元(LEARN))</p>
 <p>以寻路为例，地图发生动态变化，寻路组件重新生成导航网格的过程归类于SENSE；从起点到终点，通过A*算法搜索并生成路点集合的过程归类于PLAN；按照生成的路点进行寻路的过程归类于ACT。</p>
-<h3 id="范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><a href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm" class="headerlink" title="范式1 分级/慎思范式(Hierarchical/deliberative paradigm)"></a>范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm0.png" alt="范式1" title="范式1">
+<h3 id="范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><a href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm" class="headerlink" title="范式1 分级/慎思范式(Hierarchical/deliberative paradigm)"></a>范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</h3><img src="/2017/10/24/game-ai-introduction/paradigm0.png" alt="范式1" title="范式1">
 <p>分级范式出现于1967年第一个人工智能机器人Shakey。这里的分级是执行顺序的划分，并没有父子或者优先级的区别。在该范式中，机器人以自顶向下的方式思考，着重于<strong>规划</strong>，因此也叫慎思范式。<strong>“全局性”是分级范式的最大特点</strong>。</p>
 <p>思考步骤为:</p>
 <ul>
@@ -371,16 +371,16 @@
 <li>从第一条指令顺序执行所有指令</li>
 </ul>
 <p>寻路的过程就是这种范式的典型代表。依赖G.O.A.P或者HTN(这几种Game AI Planning的方法会在后续的文章中详细介绍)做决策的游戏AI也归属于这个范式。</p>
-<h3 id="范式2-反应范式-The-reactive-paradigm"><a href="#范式2-反应范式-The-reactive-paradigm" class="headerlink" title="范式2 反应范式(The reactive paradigm)"></a>范式2 反应范式(The reactive paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm1.png" alt="范式2" title="范式2">
+<h3 id="范式2-反应范式-The-reactive-paradigm"><a href="#范式2-反应范式-The-reactive-paradigm" class="headerlink" title="范式2 反应范式(The reactive paradigm)"></a>范式2 反应范式(The reactive paradigm)</h3><img src="/2017/10/24/game-ai-introduction/paradigm1.png" alt="范式2" title="范式2">
 <p>或许由于记忆原件的成本问题，或者出于模拟动物条件反射等生物现象的目的。80年代，研究者们设计了反应范式。该范式剔除了PLAN基元，由一组多个SENSE-ACT(S-A)结构组织而成。</p>
 <p><strong>反应范式具有”局部性”</strong>，由于个S-A结构可以自主决定机器人的行为，响应非常及时，所以很多游戏AI的文献中常常把响应及时和Reactive特性划等号。</p>
 <p>在诸个S-A结构的上层，通常还有系统进行协调。比如包容结构中，机器人的模块是可以通过能力层次进行分组的。位于较高层次的模块可以覆盖或者包容相邻低层次模块的行为数据。</p>
 <p>映射到游戏AI中，行为树(BehaviourTree)就是这种范式的代表。Parallel节点下面的每个分支可以各自分别处理自己的逻辑，但是设计者通常会在上层的逻辑对下层的行为进行某种程度的“干预”。但是，行为树中行为的执行是在各个叶子节点的Action中执行的，不会交由上层统一规划并执行。</p>
-<h3 id="范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><a href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm" class="headerlink" title="范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)"></a>范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm2.png" alt="范式3" title="范式3">
+<h3 id="范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><a href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm" class="headerlink" title="范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)"></a>范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</h3><img src="/2017/10/24/game-ai-introduction/paradigm2.png" alt="范式3" title="范式3">
 <p>顾名思义，该范式是一种企图融合前两种范式优点的产物。核心思想是PLAN根据当前外部环境决定激活哪一个或者哪一些S-A结构。</p>
 <p>在游戏AI中，混合范式的应用场景不在少数。比如某个Agent拥有多个行为树，上层某个组件或者管理类通过当前环境来决定激活哪一个行为树实例。有的观点认为混合使用Reactive和Deliberate两种范式是合理且有必要的。</p>
 <h2 id="回归GAME-AI"><a href="#回归GAME-AI" class="headerlink" title="回归GAME AI"></a>回归GAME AI</h2><h3 id="按照范式划分"><a href="#按照范式划分" class="headerlink" title="按照范式划分"></a>按照范式划分</h3><p>借鉴AI Robotics导论的概念，接下来所有文章的讨论将会把游戏AI按照Sensor，Decision-Maker，Action三部分进行划分。</p>
-<h4 id="Sensor"><a href="#Sensor" class="headerlink" title="Sensor"></a>Sensor</h4><img src="/2017/10/24/game-ai-produce/sensor.png" alt="sensor" title="sensor">
+<h4 id="Sensor"><a href="#Sensor" class="headerlink" title="Sensor"></a>Sensor</h4><img src="/2017/10/24/game-ai-introduction/sensor.png" alt="sensor" title="sensor">
 <p>Sensor指代的不仅仅是Agent的传感器应该如何设计实现，还包含在游戏开发中外部环境信息的定义，量化处理方法及一些工具化的思想。</p>
 <ul>
 <li><strong>传感器设计方面</strong>:比如根据游戏特性，有的Agent采用视锥来搜集视野信息，有的则简单采用扇形和点来设计雷达；Unity官方教程Stealth中接触Navmesh的Corner来感知声音范围，是否在墙后等。</li>
@@ -394,9 +394,9 @@
 <li><p><strong>工具化</strong>:比如依据玩家战斗信息的热度图来自动化生成Strategy Graph；根据Navmesh的信息来自动化生成掩体、障碍、狙击点等信息来帮助策划配置。</p>
 </li>
 </ul>
-<h4 id="Decision-Maker"><a href="#Decision-Maker" class="headerlink" title="Decision-Maker"></a>Decision-Maker</h4><img src="/2017/10/24/game-ai-produce/decision.png" alt="decisionmaker" title="decisionmaker">
+<h4 id="Decision-Maker"><a href="#Decision-Maker" class="headerlink" title="Decision-Maker"></a>Decision-Maker</h4><img src="/2017/10/24/game-ai-introduction/decision.png" alt="decisionmaker" title="decisionmaker">
 <p>Decision-Maker包含各种Reactivity、Deliberation或者混合范式的实现方式与利弊。比如Halo中的行为树，F.E.A.R中的G.O.A.P，Killzone中的HTN等等</p>
-<h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><img src="/2017/10/24/game-ai-produce/action.png" alt="action" title="action">
+<h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><img src="/2017/10/24/game-ai-introduction/action.png" alt="action" title="action">
 <p>Action部分包含如何呈现和管理Agent具体Action行为的思路。比如借助线性或者非线性时间轴编辑器(比如Unity的Flux、鹅厂的AgeAction等)来实现怪物AI的ActionManager；比如F.E.A.R中的一个状态机三个状态管理Action等等。</p>
 <h2 id="其他划分"><a href="#其他划分" class="headerlink" title="其他划分"></a>其他划分</h2><p>除了按照范式进行划分外，还会包含个体AI(Individual)与群体AI(Squad和Crowd)的划分；怪物BOSS、多人游戏机器人(Bot）等不同Case的划分。</p>
 <h2 id="内容播报"><a href="#内容播报" class="headerlink" title="内容播报"></a>内容播报</h2><p>系列文章内容可能包含:</p>
