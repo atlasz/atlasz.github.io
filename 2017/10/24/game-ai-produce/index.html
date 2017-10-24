@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/10/24/game-ai-produce/sensor.png">
 <meta property="og:image" content="http://yoursite.com/2017/10/24/game-ai-produce/decision.png">
 <meta property="og:image" content="http://yoursite.com/2017/10/24/game-ai-produce/action.png">
-<meta property="og:updated_time" content="2017-10-24T14:15:24.000Z">
+<meta property="og:updated_time" content="2017-10-24T14:21:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="game_ai_produce">
 <meta name="twitter:description" content="格姆艾尔是一头大象 广场上运来了一头大象，猎奇心起的居民们纷纷前去围观。大家窃窃私语，“这头大象叫格姆·阿提费什尔·英特李琼斯，真是个大家伙！”“据说它小名叫格姆艾尔，是格姆普勒地区的三大神宠之一，今天可算大饱眼福了。”几个盲人，从来没有见过大象，不知道大象长什么样子，他们决定上前摸摸大象。“我摸到大象了！”一个微胖的盲人拽着格姆艾尔的尾巴说，“它长得很像一颗行为树。”“不对！”一个秃顶的盲人打断">
@@ -343,30 +343,13 @@
         <h1 id="格姆艾尔是一头大象"><a href="#格姆艾尔是一头大象" class="headerlink" title="格姆艾尔是一头大象"></a>格姆艾尔是一头大象</h1><blockquote>
 <p>广场上运来了一头大象，猎奇心起的居民们纷纷前去围观。大家窃窃私语，“这头大象叫格姆·阿提费什尔·英特李琼斯，真是个大家伙！”“据说它小名叫格姆艾尔，是格姆普勒地区的三大神宠之一，今天可算大饱眼福了。”几个盲人，从来没有见过大象，不知道大象长什么样子，他们决定上前摸摸大象。“我摸到大象了！”一个微胖的盲人拽着格姆艾尔的尾巴说，“它长得很像一颗行为树。”“不对！”一个秃顶的盲人打断道，“大象怎么会是一棵树？他明明像一只状态鸡。”队伍中最高大的盲人自言自语，“好神奇的格姆艾尔，它的四肢粗壮，仿佛一头薰鹿。”侏儒盲人尖声惊叫，“他简直就是一头艾猩！”“小伙子们，老头子我年轻时候还没瞎，见过很多动物。”一个学者装束的老盲人慢条斯理地说，“格姆艾尔最像一种叫做阿尔法狗的生物。”争吵还在继续……</p>
 </blockquote>
-<h2 id="为什么要写这篇文章"><a href="#为什么要写这篇文章" class="headerlink" title="为什么要写这篇文章"></a>为什么要写这篇文章</h2><p>游戏AI是GamePlay中不可缺少的要素。在进行了一些项目的游戏AI的设计后，不时会受到来自同事或者朋友的一些问题，诸如:</p>
-<ul>
-<li>如何设计实现一个游戏AI?</li>
-<li>行为树插件Behave2、BehaviorDesigner、Behaviac、FlowCanvas<br>等等到底哪家强?</li>
-<li>除了BehaviorTree外，FSM、G.O.A.P、HTN是怎么运用到游戏AI中的？</li>
-<li>这些东西该如何定义？架构（Architecture)?算法(Behavior Selection Algorithms)?机制(Mechanism )？策略(Strategy)?</li>
-<li>它们可以囊括整个游戏AI的范畴了么?</li>
-<li>优缺点分别是什么，如何选择合适的?</li>
-<li>有没有方法论的东西可以对其进行归纳总结，最终形成一个可以逐步填充的体系?</li>
-<li>机器学习(增强学习、神经进化等等)到底能不能用在游戏AI里?好实现吗？</li>
-</ul>
-<p>有的问题可以一言蔽之，有的问题则需秉烛夜谈。所以，我萌发了把Game AI作为专栏系列1进行讨论的想法。在后续的文章，我将会讨论各种大小厂产品有趣的实现方案，自己工作中的实践和思考，尽量全面且不失偏颇地分析各种Tricks，以期给大家带来些许收获，激发点滴思考，创造出能取悦玩家的游戏AI。</p>
-<p>作为游戏AI部分的开篇。这篇文章承载了<strong>两个任务</strong>:</p>
-<ol>
-<li>介绍我目前认可的AI大法总纲；</li>
-<li>提前播报后续文章可能涉及的内容。</li>
-</ol>
 <h2 id="游戏开发中的人工智能"><a href="#游戏开发中的人工智能" class="headerlink" title="游戏开发中的人工智能"></a>游戏开发中的人工智能</h2><p>每一个游戏开发者在开发进行到某个阶段时，一定绕不开如何设计AI。</p>
 <p>在人工智能中，智能体(intelligent agent,简称IA)是一种实体，它自主观察感知外部环境，自行决策并选择最佳行为，以此完成自己的目标。设计游戏AI，目的就是设计能让玩家愉悦的IA，提升Gameplay的体验。</p>
 <p><strong>为了语义清晰且不造成歧义，IA在下文中用Agent表示</strong></p>
 <h2 id="从AI-Robotics开始"><a href="#从AI-Robotics开始" class="headerlink" title="从AI Robotics开始"></a>从AI Robotics开始</h2><img src="/2017/10/24/game-ai-produce/DetroitIndustry.jpg" alt="robotics" title="robotics">
 <p>学习新知识，如果害怕自己获取的信息过于片面，可以先从找一本该学科对应的导论入门开始。不幸的是我并未找到一本类似游戏AI导论的书籍，而人工智能导论概述的内容又超出游戏AI本身太多。因此，AI机器人学这个范畴刚好。无论是三种机器人范式(Robot paradigm)还是支撑范式的几个基元(Robot paradigm primitives),都可以直接映射到游戏AI中。</p>
-<h3 id="独孤九剑与机器人范式"><a href="#独孤九剑与机器人范式" class="headerlink" title="独孤九剑与机器人范式"></a>独孤九剑与机器人范式</h3><p>风清扬传授令狐冲的独孤九剑，虽有破剑、破刀、破掌、破气诸式，但以总决式纲领整套剑法，衍生三百六十种变化。姑且以机器人范式与之对应，总览游戏AI中涉及的各种技术，以期“一招鲜，吃遍天”。</p>
-<h4 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h4><p>范式是一种哲理或者界定一类问题的一组假设或技术，它是一种看待世界的方式，也包含了一系列解决问题的工具，它具有以下特点:</p>
+<h2 id="独孤九剑与机器人范式"><a href="#独孤九剑与机器人范式" class="headerlink" title="独孤九剑与机器人范式"></a>独孤九剑与机器人范式</h2><p>风清扬传授令狐冲的独孤九剑，虽有破剑、破刀、破掌、破气诸式，但以总决式纲领整套剑法，衍生三百六十种变化。姑且以机器人范式与之对应，总览游戏AI中涉及的各种技术，以期“一招鲜，吃遍天”。</p>
+<h3 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h3><p>范式是一种哲理或者界定一类问题的一组假设或技术，它是一种看待世界的方式，也包含了一系列解决问题的工具，它具有以下特点:</p>
 <ul>
 <li>范式在一定程度内具有公认性</li>
 <li>范式是一个由基本定律、理论、应用以及相关的仪器设备等构成的一个整体，它的存在给科学家提供了一个研究纲领；</li>
@@ -374,7 +357,7 @@
 </ul>
 <p>用来描述机器人范式的原子结构，我们称之为基元(为了释义准确，我不得不接受了基元这个拗口的称呼)。机器人学中有三大被普遍认可的基元,即一个机器人的主要功能可以分为三类: <strong>感知(SENSE)、规划(PLAN)和执行(ACT)</strong>。(还有一种流派认为有第四种基元(LEARN))</p>
 <p>以寻路为例，地图发生动态变化，寻路组件重新生成导航网格的过程归类于SENSE；从起点到终点，通过A*算法搜索并生成路点集合的过程归类于PLAN；按照生成的路点进行寻路的过程归类于ACT。</p>
-<h5 id="范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><a href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm" class="headerlink" title="范式1 分级/慎思范式(Hierarchical/deliberative paradigm)"></a>范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</h5><img src="/2017/10/24/game-ai-produce/paradigm0.png" alt="范式1" title="范式1">
+<h3 id="范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><a href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm" class="headerlink" title="范式1 分级/慎思范式(Hierarchical/deliberative paradigm)"></a>范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm0.png" alt="范式1" title="范式1">
 <p>分级范式出现于1967年第一个人工智能机器人Shakey。这里的分级是执行顺序的划分，并没有父子或者优先级的区别。在该范式中，机器人以自顶向下的方式思考，着重于<strong>规划</strong>，因此也叫慎思范式。<strong>“全局性”是分级范式的最大特点</strong>。</p>
 <p>思考步骤为:</p>
 <ul>
@@ -383,15 +366,15 @@
 <li>从第一条指令顺序执行所有指令</li>
 </ul>
 <p>寻路的过程就是这种范式的典型代表。依赖G.O.A.P或者HTN(这几种Game AI Planning的方法会在后续的文章中详细介绍)做决策的游戏AI也归属于这个范式。</p>
-<h5 id="范式2-反应范式-The-reactive-paradigm"><a href="#范式2-反应范式-The-reactive-paradigm" class="headerlink" title="范式2 反应范式(The reactive paradigm)"></a>范式2 反应范式(The reactive paradigm)</h5><img src="/2017/10/24/game-ai-produce/paradigm1.png" alt="范式2" title="范式2">
+<h3 id="范式2-反应范式-The-reactive-paradigm"><a href="#范式2-反应范式-The-reactive-paradigm" class="headerlink" title="范式2 反应范式(The reactive paradigm)"></a>范式2 反应范式(The reactive paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm1.png" alt="范式2" title="范式2">
 <p>或许由于记忆原件的成本问题，或者出于模拟动物条件反射等生物现象的目的。80年代，研究者们设计了反应范式。该范式剔除了PLAN基元，由一组多个SENSE-ACT(S-A)结构组织而成。</p>
 <p><strong>反应范式具有”局部性”</strong>，由于个S-A结构可以自主决定机器人的行为，响应非常及时，所以很多游戏AI的文献中常常把响应及时和Reactive特性划等号。</p>
 <p>在诸个S-A结构的上层，通常还有系统进行协调。比如包容结构中，机器人的模块是可以通过能力层次进行分组的。位于较高层次的模块可以覆盖或者包容相邻低层次模块的行为数据。</p>
 <p>映射到游戏AI中，行为树(BehaviourTree)就是这种范式的代表。Parallel节点下面的每个分支可以各自分别处理自己的逻辑，但是设计者通常会在上层的逻辑对下层的行为进行某种程度的“干预”。但是，行为树中行为的执行是在各个叶子节点的Action中执行的，不会交由上层统一规划并执行。</p>
-<h5 id="范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><a href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm" class="headerlink" title="范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)"></a>范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</h5><img src="/2017/10/24/game-ai-produce/paradigm2.png" alt="范式3" title="范式3">
+<h3 id="范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><a href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm" class="headerlink" title="范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)"></a>范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</h3><img src="/2017/10/24/game-ai-produce/paradigm2.png" alt="范式3" title="范式3">
 <p>顾名思义，该范式是一种企图融合前两种范式优点的产物。核心思想是PLAN根据当前外部环境决定激活哪一个或者哪一些S-A结构。</p>
 <p>在游戏AI中，混合范式的应用场景不在少数。比如某个Agent拥有多个行为树，上层某个组件或者管理类通过当前环境来决定激活哪一个行为树实例。有的观点认为混合使用Reactive和Deliberate两种范式是合理且有必要的。</p>
-<h3 id="回归GAME-AI"><a href="#回归GAME-AI" class="headerlink" title="回归GAME AI"></a>回归GAME AI</h3><h3 id="按照范式划分"><a href="#按照范式划分" class="headerlink" title="按照范式划分"></a>按照范式划分</h3><p>借鉴AI Robotics导论的概念，接下来所有文章的讨论将会把游戏AI按照Sensor，Decision-Maker，Action三部分进行划分。</p>
+<h2 id="回归GAME-AI"><a href="#回归GAME-AI" class="headerlink" title="回归GAME AI"></a>回归GAME AI</h2><h3 id="按照范式划分"><a href="#按照范式划分" class="headerlink" title="按照范式划分"></a>按照范式划分</h3><p>借鉴AI Robotics导论的概念，接下来所有文章的讨论将会把游戏AI按照Sensor，Decision-Maker，Action三部分进行划分。</p>
 <h4 id="Sensor"><a href="#Sensor" class="headerlink" title="Sensor"></a>Sensor</h4><img src="/2017/10/24/game-ai-produce/sensor.png" alt="sensor" title="sensor">
 <p>Sensor指代的不仅仅是Agent的传感器应该如何设计实现，还包含在游戏开发中外部环境信息的定义，量化处理方法及一些工具化的思想。</p>
 <ul>
@@ -410,12 +393,12 @@
 <p>Decision-Maker包含各种Reactivity、Deliberation或者混合范式的实现方式与利弊。比如Halo中的行为树，F.E.A.R中的G.O.A.P，Killzone中的HTN等等</p>
 <h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><img src="/2017/10/24/game-ai-produce/action.png" alt="action" title="action">
 <p>Action部分包含如何呈现和管理Agent具体Action行为的思路。比如借助线性或者非线性时间轴编辑器(比如Unity的Flux、鹅厂的AgeAction等)来实现怪物AI的ActionManager；比如F.E.A.R中的一个状态机三个状态管理Action等等。</p>
-<h3 id="其他划分"><a href="#其他划分" class="headerlink" title="其他划分"></a>其他划分</h3><p>除了按照范式进行划分外，还会包含个体AI(Indivitual)与群体AI(Squad和Crowd)的划分；怪物BOSS、多人游戏机器人(Bot）等不同Case的划分。</p>
+<h2 id="其他划分"><a href="#其他划分" class="headerlink" title="其他划分"></a>其他划分</h2><p>除了按照范式进行划分外，还会包含个体AI(Individual)与群体AI(Squad和Crowd)的划分；怪物BOSS、多人游戏机器人(Bot）等不同Case的划分。</p>
 <h2 id="内容播报"><a href="#内容播报" class="headerlink" title="内容播报"></a>内容播报</h2><p>系列文章内容可能包含:</p>
 <ol>
-<li>以上比如字段中某些内容的具体实现案例</li>
+<li>具体实现案例</li>
 <li>工作的思考</li>
-<li>工具和Visual Debug等提搞开发效率，帮助策划配置等各种可能间接导致提升GamePlay的法子</li>
+<li>如何提高开发效率</li>
 </ol>
 
       
@@ -571,7 +554,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#格姆艾尔是一头大象"><span class="nav-number">1.</span> <span class="nav-text">格姆艾尔是一头大象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要写这篇文章"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要写这篇文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏开发中的人工智能"><span class="nav-number">1.2.</span> <span class="nav-text">游戏开发中的人工智能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从AI-Robotics开始"><span class="nav-number">1.3.</span> <span class="nav-text">从AI Robotics开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#独孤九剑与机器人范式"><span class="nav-number">1.3.1.</span> <span class="nav-text">独孤九剑与机器人范式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#范式"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">范式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><span class="nav-number">1.3.1.1.1.</span> <span class="nav-text">范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#范式2-反应范式-The-reactive-paradigm"><span class="nav-number">1.3.1.1.2.</span> <span class="nav-text">范式2 反应范式(The reactive paradigm)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><span class="nav-number">1.3.1.1.3.</span> <span class="nav-text">范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归GAME-AI"><span class="nav-number">1.3.2.</span> <span class="nav-text">回归GAME AI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按照范式划分"><span class="nav-number">1.3.3.</span> <span class="nav-text">按照范式划分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sensor"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Sensor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Decision-Maker"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">Decision-Maker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">Action</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他划分"><span class="nav-number">1.3.4.</span> <span class="nav-text">其他划分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容播报"><span class="nav-number">1.4.</span> <span class="nav-text">内容播报</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#格姆艾尔是一头大象"><span class="nav-number">1.</span> <span class="nav-text">格姆艾尔是一头大象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏开发中的人工智能"><span class="nav-number">1.1.</span> <span class="nav-text">游戏开发中的人工智能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从AI-Robotics开始"><span class="nav-number">1.2.</span> <span class="nav-text">从AI Robotics开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#独孤九剑与机器人范式"><span class="nav-number">1.3.</span> <span class="nav-text">独孤九剑与机器人范式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#范式"><span class="nav-number">1.3.1.</span> <span class="nav-text">范式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范式1-分级-慎思范式-Hierarchical-deliberative-paradigm"><span class="nav-number">1.3.2.</span> <span class="nav-text">范式1 分级/慎思范式(Hierarchical/deliberative paradigm)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范式2-反应范式-The-reactive-paradigm"><span class="nav-number">1.3.3.</span> <span class="nav-text">范式2 反应范式(The reactive paradigm)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范式3-慎思-反应混合范式-Hybrid-deliberate-reactive-paradigm"><span class="nav-number">1.3.4.</span> <span class="nav-text">范式3 慎思/反应混合范式(Hybrid deliberate/reactive paradigm)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归GAME-AI"><span class="nav-number">1.4.</span> <span class="nav-text">回归GAME AI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按照范式划分"><span class="nav-number">1.4.1.</span> <span class="nav-text">按照范式划分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sensor"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Sensor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Decision-Maker"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">Decision-Maker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">Action</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他划分"><span class="nav-number">1.5.</span> <span class="nav-text">其他划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容播报"><span class="nav-number">1.6.</span> <span class="nav-text">内容播报</span></a></li></ol></li></ol></div>
             
 
           </div>
