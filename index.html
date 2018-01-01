@@ -345,7 +345,80 @@
       
         
           
-            <h1 id="Multiplayer-FPS游戏的网络架构"><a href="#Multiplayer-FPS游戏的网络架构" class="headerlink" title="Multiplayer-FPS游戏的网络架构"></a>Multiplayer-FPS游戏的网络架构</h1><p>想好题目，待更新</p>
+            <h1 id="Multiplayer-FPS游戏的网络架构"><a href="#Multiplayer-FPS游戏的网络架构" class="headerlink" title="Multiplayer-FPS游戏的网络架构"></a>Multiplayer-FPS游戏的网络架构</h1><p>先列出骨架，慢慢填坑</p>
+<h2 id="游戏趋势"><a href="#游戏趋势" class="headerlink" title="游戏趋势"></a>游戏趋势</h2><ul>
+<li>游戏角色GamePlay逻辑日益复杂<ul>
+<li>TitanFall:载具</li>
+<li>Overwatch、枪火游侠:技能</li>
+</ul>
+</li>
+<li>游戏模式玩法多变、规模变大<ul>
+<li>Killzone的玩法模式</li>
+<li>吃鸡的大规模大逃杀</li>
+</ul>
+</li>
+</ul>
+<h2 id="游戏需求"><a href="#游戏需求" class="headerlink" title="游戏需求"></a>游戏需求</h2><ul>
+<li>应对复杂的GamePlay</li>
+<li>世界状态的切换<ul>
+<li>Killcam</li>
+<li>精彩时刻</li>
+</ul>
+</li>
+</ul>
+<h2 id="重点问题"><a href="#重点问题" class="headerlink" title="重点问题"></a>重点问题</h2><ul>
+<li>响应性:Responsive</li>
+<li>服务器权威:Server Authority</li>
+</ul>
+<h2 id="同步方案的选择"><a href="#同步方案的选择" class="headerlink" title="同步方案的选择"></a>同步方案的选择</h2><ul>
+<li>LockStep的指令同步</li>
+<li>Client-Server的状态同步</li>
+</ul>
+<h2 id="Lowlevel的Network"><a href="#Lowlevel的Network" class="headerlink" title="Lowlevel的Network"></a>Lowlevel的Network</h2><ul>
+<li>RUDP的实现</li>
+</ul>
+<h2 id="HighLevel的Network"><a href="#HighLevel的Network" class="headerlink" title="HighLevel的Network"></a>HighLevel的Network</h2><ul>
+<li>类似UNet和Unreal的接口封装<ul>
+<li>RPC</li>
+<li>SyncVar</li>
+</ul>
+</li>
+<li>ECS(服务但不仅限于网络架构)</li>
+</ul>
+<h2 id="LocalPlayer的状态预测和确认"><a href="#LocalPlayer的状态预测和确认" class="headerlink" title="LocalPlayer的状态预测和确认"></a>LocalPlayer的状态预测和确认</h2><ul>
+<li>可靠通道<ul>
+<li>基于Pattern</li>
+<li>基于Sequence或者Tick</li>
+<li>两者结合</li>
+</ul>
+</li>
+<li>不可靠通道<ul>
+<li>Unreal(还未研究)</li>
+</ul>
+</li>
+</ul>
+<h2 id="移动同步"><a href="#移动同步" class="headerlink" title="移动同步"></a>移动同步</h2><h3 id="LocalPlayer"><a href="#LocalPlayer" class="headerlink" title="LocalPlayer"></a>LocalPlayer</h3><ul>
+<li>目的:响应及时，少拉扯</li>
+<li>prediction</li>
+<li>reconciliation</li>
+</ul>
+<h3 id="RemotePlayer"><a href="#RemotePlayer" class="headerlink" title="RemotePlayer"></a>RemotePlayer</h3><ul>
+<li>目的:平滑、少闪现</li>
+<li>Dead Reckoning </li>
+<li>Entity Interpolation<ul>
+<li>引入Interpolation Delay(IND)</li>
+</ul>
+</li>
+</ul>
+<h2 id="HitReg"><a href="#HitReg" class="headerlink" title="HitReg"></a>HitReg</h2><ul>
+<li>由于引入IND的延迟补偿</li>
+<li>Rewind机制</li>
+</ul>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>不断填充Network架构的内容</li>
+<li>不断细化每个内容</li>
+<li>讨论并实现每个细节</li>
+</ul>
 
           
         
