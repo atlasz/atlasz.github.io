@@ -356,7 +356,19 @@
 </li>
 </ul>
 <p>RPC在游戏逻辑中通常用作不重要的逻辑调用(经验之谈)，比如开枪后服务器回调客户端播放声音、枪火特效等。<br>数据的同步则常用来表示逻辑状态的变更。</p>
-<h1 id="状态预测与确认的方法"><a href="#状态预测与确认的方法" class="headerlink" title="状态预测与确认的方法"></a>状态预测与确认的方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1>
+<h1 id="状态预测与确认的方法-填坑中"><a href="#状态预测与确认的方法-填坑中" class="headerlink" title="状态预测与确认的方法(填坑中)"></a>状态预测与确认的方法(填坑中)</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h2 id="关于确定性"><a href="#关于确定性" class="headerlink" title="关于确定性"></a>关于确定性</h2><p>在守望先锋中，保持一致性的术语其称之为确定性(determinism)。这里的确定性和LockStep的确定性不是一个意思，后者指的是统一的输入永远得到统一的输出，主要解决的是浮点数的不确定性问题。</p>
+<p>保持确定性的方法的本质是使用一致的逻辑(游戏逻辑、物理逻辑),在相同的时刻以相同的频率进行模拟计算，也就是其列出的几个手段:</p>
+<ul>
+<li>synchronized clock:对时来确保客户端和服务器逻辑触发时机的一致。</li>
+<li>fixed update:固定频率更新以确保客户端和服务器计算频率一致</li>
+<li>quantization:设置频率来提高或者降低计算的精度。</li>
+</ul>
+<h2 id="基于Tick的确认方法-填坑中"><a href="#基于Tick的确认方法-填坑中" class="headerlink" title="基于Tick的确认方法(填坑中)"></a>基于Tick的确认方法(填坑中)</h2><ul>
+<li>状态:确认预表现的结果</li>
+<li>CommandQueue:RollForth的依据</li>
+</ul>
+<h1 id="一些手机FPS游戏中实际的运用和思考"><a href="#一些手机FPS游戏中实际的运用和思考" class="headerlink" title="一些手机FPS游戏中实际的运用和思考"></a>一些手机FPS游戏中实际的运用和思考</h1><p>（填坑中）</p>
+
           
         
       

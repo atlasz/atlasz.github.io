@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="GamePlay First">
 <meta property="og:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-06T07:46:13.000Z">
+<meta property="og:updated_time" content="2018-01-06T08:01:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态同步的预表现和确认机制">
 <meta name="twitter:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
@@ -353,7 +353,19 @@
 </li>
 </ul>
 <p>RPC在游戏逻辑中通常用作不重要的逻辑调用(经验之谈)，比如开枪后服务器回调客户端播放声音、枪火特效等。<br>数据的同步则常用来表示逻辑状态的变更。</p>
-<h1 id="状态预测与确认的方法"><a href="#状态预测与确认的方法" class="headerlink" title="状态预测与确认的方法"></a>状态预测与确认的方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1>
+<h1 id="状态预测与确认的方法-填坑中"><a href="#状态预测与确认的方法-填坑中" class="headerlink" title="状态预测与确认的方法(填坑中)"></a>状态预测与确认的方法(填坑中)</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h2 id="关于确定性"><a href="#关于确定性" class="headerlink" title="关于确定性"></a>关于确定性</h2><p>在守望先锋中，保持一致性的术语其称之为确定性(determinism)。这里的确定性和LockStep的确定性不是一个意思，后者指的是统一的输入永远得到统一的输出，主要解决的是浮点数的不确定性问题。</p>
+<p>保持确定性的方法的本质是使用一致的逻辑(游戏逻辑、物理逻辑),在相同的时刻以相同的频率进行模拟计算，也就是其列出的几个手段:</p>
+<ul>
+<li>synchronized clock:对时来确保客户端和服务器逻辑触发时机的一致。</li>
+<li>fixed update:固定频率更新以确保客户端和服务器计算频率一致</li>
+<li>quantization:设置频率来提高或者降低计算的精度。</li>
+</ul>
+<h2 id="基于Tick的确认方法-填坑中"><a href="#基于Tick的确认方法-填坑中" class="headerlink" title="基于Tick的确认方法(填坑中)"></a>基于Tick的确认方法(填坑中)</h2><ul>
+<li>状态:确认预表现的结果</li>
+<li>CommandQueue:RollForth的依据</li>
+</ul>
+<h1 id="一些手机FPS游戏中实际的运用和思考"><a href="#一些手机FPS游戏中实际的运用和思考" class="headerlink" title="一些手机FPS游戏中实际的运用和思考"></a>一些手机FPS游戏中实际的运用和思考</h1><p>（填坑中）</p>
+
       
     </div>
     
@@ -523,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步的数据"><span class="nav-number">1.2.</span> <span class="nav-text">同步的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态预测与确认的方法"><span class="nav-number">2.</span> <span class="nav-text">状态预测与确认的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Pattern"><span class="nav-number">2.1.</span> <span class="nav-text">基于Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">2.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步的数据"><span class="nav-number">1.2.</span> <span class="nav-text">同步的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态预测与确认的方法-填坑中"><span class="nav-number">2.</span> <span class="nav-text">状态预测与确认的方法(填坑中)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Pattern"><span class="nav-number">2.1.</span> <span class="nav-text">基于Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">2.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于确定性"><span class="nav-number">3.1.</span> <span class="nav-text">关于确定性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick的确认方法-填坑中"><span class="nav-number">3.2.</span> <span class="nav-text">基于Tick的确认方法(填坑中)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些手机FPS游戏中实际的运用和思考"><span class="nav-number">4.</span> <span class="nav-text">一些手机FPS游戏中实际的运用和思考</span></a></li></ol></div>
             
 
           </div>
