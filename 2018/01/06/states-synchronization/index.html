@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="GamePlay First">
 <meta property="og:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-06T07:40:37.000Z">
+<meta property="og:updated_time" content="2018-01-06T07:46:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态同步的预表现和确认机制">
 <meta name="twitter:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
@@ -330,8 +330,8 @@
 </ul>
 </li>
 </ul>
-<h1 id="同步的数据"><a href="#同步的数据" class="headerlink" title="同步的数据"></a>同步的数据</h1><pre><code>客户端和服务器传递数据，更改状态。
-</code></pre><ul>
+<h2 id="同步的数据"><a href="#同步的数据" class="headerlink" title="同步的数据"></a>同步的数据</h2><p>客户端和服务器传递数据，更改状态。</p>
+<ul>
 <li>上行:<ul>
 <li>客户端发送指令<ul>
 <li>Send Commond</li>
@@ -339,23 +339,21 @@
 </li>
 </ul>
 </li>
-<li><p>下行:</p>
-<ul>
+<li>下行:<ul>
 <li>服务器发消息<ul>
 <li>Remote procedure calls (RPC)</li>
 </ul>
 </li>
-<li><p>同步数据:封装成常用变量、数组、机构体等等</p>
-<ul>
+<li>同步数据:封装成常用变量、数组、机构体等等<ul>
 <li>UnityNet:SyncVar</li>
 <li>Unreal:Replication</li>
 </ul>
+</li>
+</ul>
+</li>
+</ul>
 <p>RPC在游戏逻辑中通常用作不重要的逻辑调用(经验之谈)，比如开枪后服务器回调客户端播放声音、枪火特效等。<br>数据的同步则常用来表示逻辑状态的变更。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h1 id="一些方法"><a href="#一些方法" class="headerlink" title="一些方法"></a>一些方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2>
+<h1 id="状态预测与确认的方法"><a href="#状态预测与确认的方法" class="headerlink" title="状态预测与确认的方法"></a>状态预测与确认的方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1>
       
     </div>
     
@@ -525,7 +523,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同步的数据"><span class="nav-number">2.</span> <span class="nav-text">同步的数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些方法"><span class="nav-number">4.</span> <span class="nav-text">一些方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Pattern"><span class="nav-number">4.1.</span> <span class="nav-text">基于Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">4.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步的数据"><span class="nav-number">1.2.</span> <span class="nav-text">同步的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态预测与确认的方法"><span class="nav-number">2.</span> <span class="nav-text">状态预测与确认的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Pattern"><span class="nav-number">2.1.</span> <span class="nav-text">基于Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">2.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a></li></ol></div>
             
 
           </div>

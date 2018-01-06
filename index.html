@@ -333,8 +333,8 @@
 </ul>
 </li>
 </ul>
-<h1 id="同步的数据"><a href="#同步的数据" class="headerlink" title="同步的数据"></a>同步的数据</h1><pre><code>客户端和服务器传递数据，更改状态。
-</code></pre><ul>
+<h2 id="同步的数据"><a href="#同步的数据" class="headerlink" title="同步的数据"></a>同步的数据</h2><p>客户端和服务器传递数据，更改状态。</p>
+<ul>
 <li>上行:<ul>
 <li>客户端发送指令<ul>
 <li>Send Commond</li>
@@ -342,23 +342,21 @@
 </li>
 </ul>
 </li>
-<li><p>下行:</p>
-<ul>
+<li>下行:<ul>
 <li>服务器发消息<ul>
 <li>Remote procedure calls (RPC)</li>
 </ul>
 </li>
-<li><p>同步数据:封装成常用变量、数组、机构体等等</p>
-<ul>
+<li>同步数据:封装成常用变量、数组、机构体等等<ul>
 <li>UnityNet:SyncVar</li>
 <li>Unreal:Replication</li>
 </ul>
+</li>
+</ul>
+</li>
+</ul>
 <p>RPC在游戏逻辑中通常用作不重要的逻辑调用(经验之谈)，比如开枪后服务器回调客户端播放声音、枪火特效等。<br>数据的同步则常用来表示逻辑状态的变更。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h1 id="一些方法"><a href="#一些方法" class="headerlink" title="一些方法"></a>一些方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2>
+<h1 id="状态预测与确认的方法"><a href="#状态预测与确认的方法" class="headerlink" title="状态预测与确认的方法"></a>状态预测与确认的方法</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1>
           
         
       
