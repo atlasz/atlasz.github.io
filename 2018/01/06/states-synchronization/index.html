@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="GamePlay First">
 <meta property="og:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-06T08:01:50.000Z">
+<meta property="og:updated_time" content="2018-01-10T08:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="状态同步的预表现和确认机制">
 <meta name="twitter:description" content="C/S架构下的同步C/S(Client-Server)架构下，服务器和客户端需要保持一致的状态，且服务器权威。客户端的指令引发服务器世界状态的变化，服务器下发的快照(SnapShot)数据改变客户端游戏世界的状态。出于游戏逻辑的需要，客户端和服务器都需要感知彼此在当前时刻出于何种状态。 如何保证一致性? 精确对时 服务器和客户端选择合适的频率 理论上频率越快越精确，但是出于性能和带宽的考虑，选择合">
@@ -333,7 +333,7 @@
 <h2 id="同步的数据"><a href="#同步的数据" class="headerlink" title="同步的数据"></a>同步的数据</h2><p>客户端和服务器传递数据，更改状态。</p>
 <ul>
 <li>上行:<ul>
-<li>客户端发送指令<ul>
+<li>客户端发送指令(指令的内容和粒度跟游戏业务逻辑相关)<ul>
 <li>Send Commond</li>
 </ul>
 </li>
@@ -353,7 +353,76 @@
 </li>
 </ul>
 <p>RPC在游戏逻辑中通常用作不重要的逻辑调用(经验之谈)，比如开枪后服务器回调客户端播放声音、枪火特效等。<br>数据的同步则常用来表示逻辑状态的变更。</p>
-<h1 id="状态预测与确认的方法-填坑中"><a href="#状态预测与确认的方法-填坑中" class="headerlink" title="状态预测与确认的方法(填坑中)"></a>状态预测与确认的方法(填坑中)</h1><h2 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h2><h2 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h2><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h2 id="关于确定性"><a href="#关于确定性" class="headerlink" title="关于确定性"></a>关于确定性</h2><p>在守望先锋中，保持一致性的术语其称之为确定性(determinism)。这里的确定性和LockStep的确定性不是一个意思，后者指的是统一的输入永远得到统一的输出，主要解决的是浮点数的不确定性问题。</p>
+<h1 id="状态预测与确认的方法"><a href="#状态预测与确认的方法" class="headerlink" title="状态预测与确认的方法"></a>状态预测与确认的方法</h1><h2 id="一些术语"><a href="#一些术语" class="headerlink" title="一些术语"></a>一些术语</h2><ul>
+<li>rollback:回滚。当客户端和服务器状态不一致时，客户端将当前状态回退到服务器状态</li>
+<li>rollforth:‘前滚’。因为回滚所依赖的数据必定是旧的数据，所以客户端回退状态以后，根据缓存的指令再次预表现到自认为正确的状态，以期达到客户端和服务器在时空上的一致。</li>
+</ul>
+<h2 id="上行的粒度选择"><a href="#上行的粒度选择" class="headerlink" title="上行的粒度选择"></a>上行的粒度选择</h2><h3 id="发送操作级别的指令"><a href="#发送操作级别的指令" class="headerlink" title="发送操作级别的指令"></a>发送操作级别的指令</h3><ul>
+<li>逐Tick发送<ul>
+<li>采用不可靠通道 </li>
+<li>采用可靠通道</li>
+</ul>
+</li>
+<li>倾向前者，需要服务器逻辑做一定的容错。后者基本违背了使用不可靠通道的初衷。</li>
+</ul>
+<h3 id="发送状态变化级别的指令"><a href="#发送状态变化级别的指令" class="headerlink" title="发送状态变化级别的指令"></a>发送状态变化级别的指令</h3><ul>
+<li>状态变更时发送</li>
+<li>必须可靠通道</li>
+</ul>
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同步操作指令</td>
+<td>粒度细、占用更多流量<br>方便做状态rollforth，可跨状态</td>
+<td>服务器要有一定的容错逻辑<br>客户端计算开销更大</td>
+</tr>
+<tr>
+<td>同步状态变化</td>
+<td>粒度粗、比前者省流量<br>只能做单一状态内的rollforth</td>
+<td>客户端和服务器对齐上会有偏差<br>客户端计算开销小</td>
+</tr>
+</tbody>
+</table>
+<h2 id="下行的状态确认"><a href="#下行的状态确认" class="headerlink" title="下行的状态确认"></a>下行的状态确认</h2><ul>
+<li>理想状态:当客户端预表现状态A-&gt;B-&gt;C，并发送相应指令后，服务器若没有发生异常，会同步A-&gt;B-&gt;C。</li>
+<li>实际状态<ul>
+<li>A-&gt;B-&gt;C 的迁移非常迅速(一帧内)，B没必要也通常不会下发</li>
+<li>下行通常采用‘不可靠’通道，只保证最终状态的重发。即中间状态丢了不会重发</li>
+</ul>
+</li>
+</ul>
+<h3 id="基于Pattern"><a href="#基于Pattern" class="headerlink" title="基于Pattern"></a>基于Pattern</h3><ul>
+<li>完备的前提:理想状态</li>
+<li>在不完备，即实际状态下，有两种方式</li>
+</ul>
+<h4 id="前向确认"><a href="#前向确认" class="headerlink" title="前向确认"></a>前向确认</h4><ul>
+<li>预表现状态存在Queue或者RingBuffer中。服务器数据下发后，预表现队列队头出列，匹配成功静默不处理，失败则清空队列，客户端回滚到服务器状态。</li>
+<li>当发生循环时，会有以下几种出错的可能性<ul>
+<li>服务器丢状态，导致预表现队列清空。后续状态会连续信赖服务器而回退，如<ul>
+<li>客户端 A-&gt;B-&gt;C-&gt;A-&gt;B-&gt;C，服务器下发A-&gt;C-&gt;A-&gt;B-&gt;C。则A-&gt;B-&gt;C都会多执行一次(预表现+信任服务器)</li>
+</ul>
+</li>
+<li>服务器在快速执行的过程中省略中间过程，会导致客户端预表现状态残留<ul>
+<li>通常情况下，客户端的操作不希望进行无限制预表现。所以某些关键操作会检查预表现队列，如果有残余则禁止预表现。客户端 A-&gt;B-&gt;A-&gt;B,服务器忽略中间过程，同步起始A和最终B。预表现队列残留A-&gt;B，则在服务器下一个状态下发前，客户端无法进行关键动作预表现。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="后向确认"><a href="#后向确认" class="headerlink" title="后向确认"></a>后向确认</h4><ul>
+<li>预表现状态存在栈中，总是从最新状态开始匹配。适用于不存在循环的情况，万一出现循环，则最后几个状态会被服务器拉车</li>
+</ul>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><ul>
+<li>基于Pattern的状态确认只有在‘理想状态’下才能完全生效</li>
+</ul>
+<h3 id="基于Tick-or-Sequence"><a href="#基于Tick-or-Sequence" class="headerlink" title="基于Tick or Sequence"></a>基于Tick or Sequence</h3><h1 id="Overwatch的参考"><a href="#Overwatch的参考" class="headerlink" title="Overwatch的参考"></a>Overwatch的参考</h1><h2 id="关于确定性"><a href="#关于确定性" class="headerlink" title="关于确定性"></a>关于确定性</h2><p>在守望先锋中，保持一致性的术语其称之为确定性(determinism)。这里的确定性和LockStep的确定性不是一个意思，后者指的是统一的输入永远得到统一的输出，主要解决的是浮点数的不确定性问题。</p>
 <p>保持确定性的方法的本质是使用一致的逻辑(游戏逻辑、物理逻辑),在相同的时刻以相同的频率进行模拟计算，也就是其列出的几个手段:</p>
 <ul>
 <li>synchronized clock:对时来确保客户端和服务器逻辑触发时机的一致。</li>
@@ -535,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步的数据"><span class="nav-number">1.2.</span> <span class="nav-text">同步的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态预测与确认的方法-填坑中"><span class="nav-number">2.</span> <span class="nav-text">状态预测与确认的方法(填坑中)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Pattern"><span class="nav-number">2.1.</span> <span class="nav-text">基于Pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">2.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于确定性"><span class="nav-number">3.1.</span> <span class="nav-text">关于确定性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick的确认方法-填坑中"><span class="nav-number">3.2.</span> <span class="nav-text">基于Tick的确认方法(填坑中)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些手机FPS游戏中实际的运用和思考"><span class="nav-number">4.</span> <span class="nav-text">一些手机FPS游戏中实际的运用和思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-S架构下的同步"><span class="nav-number">1.</span> <span class="nav-text">C/S架构下的同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证一致性"><span class="nav-number">1.1.</span> <span class="nav-text">如何保证一致性?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步的数据"><span class="nav-number">1.2.</span> <span class="nav-text">同步的数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态预测与确认的方法"><span class="nav-number">2.</span> <span class="nav-text">状态预测与确认的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些术语"><span class="nav-number">2.1.</span> <span class="nav-text">一些术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上行的粒度选择"><span class="nav-number">2.2.</span> <span class="nav-text">上行的粒度选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送操作级别的指令"><span class="nav-number">2.2.1.</span> <span class="nav-text">发送操作级别的指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送状态变化级别的指令"><span class="nav-number">2.2.2.</span> <span class="nav-text">发送状态变化级别的指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比"><span class="nav-number">2.3.</span> <span class="nav-text">对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下行的状态确认"><span class="nav-number">2.4.</span> <span class="nav-text">下行的状态确认</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Pattern"><span class="nav-number">2.4.1.</span> <span class="nav-text">基于Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前向确认"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">前向确认</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后向确认"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">后向确认</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">2.4.1.3.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于Tick-or-Sequence"><span class="nav-number">2.4.2.</span> <span class="nav-text">基于Tick or Sequence</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Overwatch的参考"><span class="nav-number">3.</span> <span class="nav-text">Overwatch的参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于确定性"><span class="nav-number">3.1.</span> <span class="nav-text">关于确定性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Tick的确认方法-填坑中"><span class="nav-number">3.2.</span> <span class="nav-text">基于Tick的确认方法(填坑中)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些手机FPS游戏中实际的运用和思考"><span class="nav-number">4.</span> <span class="nav-text">一些手机FPS游戏中实际的运用和思考</span></a></li></ol></div>
             
 
           </div>
